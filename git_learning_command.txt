@@ -1,0 +1,21 @@
+echo "description of my project" >> README.md
+git init
+git config --global user.email "zeronfery@gmail.com"
+git config --global user.name "zeronfery"
+git add . / git add filename
+git commit -m "description about your modifications"
+git branch -M master
+git remote add origin https://github.com/zeronfery/multiThreads_learning.git
+git push -u origin master
+
+更新命令
+git status // 查看修改来了那些文件
+git add .
+git commit -m "descrip about my modifications"
+git push
+git log  // 显示所有的提交日志
+git log -p  // 这个文件的最后一次提交日志
+git log --author=<committer name>
+git blame <file> // 这个文件被谁修改过
+git branch <new branch> // 创建新分支
+git pull <remote><branch> // 从远程库更新数据并立即合并数据
