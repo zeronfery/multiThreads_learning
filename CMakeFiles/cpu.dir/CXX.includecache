@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/jrf/Desktop/ESWIN_Competetion/contest/example/pint_competition/cpu/main.cpp
+stdio.h
+-
+stdlib.h
+-
+memory.h
+-
+sys/time.h
+-
+pthread.h
+-
+semaphore.h
+-
+string.h
+-
+list
+-
+unistd.h
+-
+iostream
+-
+
