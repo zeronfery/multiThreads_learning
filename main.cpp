@@ -35,10 +35,16 @@ static inline int atomic_add(atomic_t *v, const int c) // 原子加操作
 
 static inline int atomic_inc(atomic_t *v) { return atomic_add(v, 1); } // 原子自加操作
 
-static inline int atomic_dec(atomic_t *v) { return atomic_add(v, -1); }
+static inline int atomic_dec(atomic_t *v) { return atomic_add(v, -1); } // 原子自减操作
 /*--------------------------------------------------------------------*/
 
 //jrf,串行：m条边，n个点复杂度：n*m
+
+void *calcIndeg(void *){
+    
+}
+
+// 串行算法。。不太行
 void calc_inDegree(int n_vert, int n_edge, int *input, int *InDegrees)
 {
     int results[n_vert] = {0};
@@ -57,6 +63,8 @@ void calc_inDegree(int n_vert, int n_edge, int *input, int *InDegrees)
     cout<<input[n_vert-1] << endl;
     InDegrees = results;
 }
+
+
 // 计算最长路径
 void calc_longest_path(int n_vertex, int n_edge, int *input, int *output)
 {
@@ -233,6 +241,14 @@ int RunTest(int argc, char *argv[])
     return 0;
 }
 
+// 原子加 线程测试函数
+void *testfunction(void *value){
+    atomic_inc((int *)value);
+    int a = *(int *)value;
+    printf("The Value changed and it is: %d\n", a);
+    pthread_exit(0);
+}
+
 int main(int argc, char *argv[])
 {
     if (argc != 5)
@@ -262,8 +278,8 @@ int main(int argc, char *argv[])
         printf("FAILED!!\n");
     }
 
-   volatile int test =6;
-    volatile int *test_out;// = (int *)malloc(sizeof(int));
+    int test =6;
+    int *test_out;// = (int *)malloc(sizeof(int));
     cout<< "原子操作测试开始=====================================begin\n";
     test_out = &test;
     atomic_inc(&test);
@@ -273,6 +289,17 @@ int main(int argc, char *argv[])
     cout<<"赋值返回 is： "<<test<<endl;
     cout<<atomic_add(&test,2)<<endl;
     cout<<test<<endl;
+    cout<<"test The mutithreads about 原子=============================begin";
+    pthread_t testhrs[10];
+    int *test_value = (int *)malloc(sizeof(int));
+    *test_value = 0;
+    for(int j = 0;j<10;j++)
+    {
+        pthread_create(&testhrs[j],NULL,testfunction,(void *)test_value);
+        pthread_join(testhrs[j],NULL);
+    }
+    cout<<"at last the value is: "<<*test_value<<endl;
+    cout<<"test The mutithreads about 原子=============================begin";
     cout<< "原子操作测试结束======================================end\n";
 
     pthread_exit(NULL);
