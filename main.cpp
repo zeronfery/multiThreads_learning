@@ -41,7 +41,7 @@ static inline int atomic_dec(atomic_t *v) { return atomic_add(v, -1); } // 原�
 //jrf,串行：m条边，n个点复杂度：n*m
 
 void *calcIndeg(void *){
-    
+
 }
 
 // 串行算法。。不太行
@@ -243,7 +243,10 @@ int RunTest(int argc, char *argv[])
 
 // 原子加 线程测试函数
 void *testfunction(void *value){
-    atomic_inc((int *)value);
+    
+    for(int i = 0; i<10;i++)
+        (*(int *)value)+=1;
+        // atomic_inc((int *)value);
     int a = *(int *)value;
     printf("The Value changed and it is: %d\n", a);
     pthread_exit(0);
